@@ -1,7 +1,11 @@
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_pinecone.vectorstores import PineconeVectorStore
+from langchain_community.document_loaders import PyPDFLoader
+from langchain.docstore.document import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 model = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-mpnet-base-cos-v1")
 
-from langchain_pinecone.vectorstores import PineconeVectorStore
 pc_apikey = "pcsk_25oCJP_NkpfLrNG7FrNpev3yRsvhPR1VmWQZuaUWbXdNvFbM16G2YMwdLH15wMRjqPHs8i"
 pinecone3 = PineconeVectorStore(pinecone_api_key=pc_apikey, embedding=model, index_name="topic-store2")
 pinecone4 = PineconeVectorStore(pinecone_api_key=pc_apikey, embedding=model, index_name="content-store")
@@ -101,8 +105,12 @@ def createContent():
     data = flask.request.json
     cls = data.get("cls")
     course = data.get("course")
+    course_id = data.get("course_id")
     subject = data.get("subject")
+    subject_id = data.get("subject_id")
     topic = data.get("topic")
+    topic_id = data.get("topic_id")
+    topic_desc = data.get("topic_desc")
     content = data.get("content")
     link = data.get("link")
 
@@ -132,6 +140,8 @@ def createContent():
 
     if isinstance(subject, int):
         subject_id = subject
+        cursor.execute("SELECT name FROM subject WHERE subject_id = %s", (subject_id,))
+        subject = cursor.fetchone()[0]
     else:
         cursor.execute("SELECT * FROM subject WHERE name = %s AND course_id = %s", (subject, course_id))
         result3 = cursor.fetchone()
@@ -147,21 +157,28 @@ def createContent():
 
     if isinstance(topic, int):
         topic_id = topic
+        cursor.execute("SELECT name, description FROM topic WHERE topic_id = %s", (topic_id,))
+        topic, topic_desc = cursor.fetchone()
     else:
-        cursor.execute("SELECT * FROM topic WHERE name = %s AND subject_id = %s", (topic, subject_id))
+        cursor.execute("SELECT topic_id, name, description FROM topic WHERE name = %s AND subject_id = %s", (topic, subject_id))
         result4 = cursor.fetchone()
         if not result4:
             cursor.execute(
-                "INSERT INTO topic (subject_id, name) VALUES (%s, %s) RETURNING topic_id",
-                (subject_id, topic)
+                "INSERT INTO topic (subject_id, name, description) VALUES (%s, %s, %s) RETURNING topic_id, name, description",
+                (subject_id, topic, topic_desc)
             )
-            topic_id = cursor.fetchone()[0]
+            topic_id, topic, topic_desc = cursor.fetchone()
             conn.commit()
 
             # INSERT INTO PINECONE topic-store2
-            # pinecone3.add_documents()
+            documents = [Document(
+                id = topic_id,
+                page_content = f"{subject} {topic} {topic_desc}",
+                metadata = { "cls": cls, "course_id": course_id, "subject_id": subject_id, "topic_id": topic_id }
+            )]
+            pinecone3.add_documents(documents)
         else:
-            topic_id = result4[0]
+            topic_id, topic, topic_desc = result4
 
     cursor.execute("SELECT * FROM content WHERE topic_id = %s AND link = %s", (topic_id, link))
     result5 = cursor.fetchone()
@@ -174,11 +191,20 @@ def createContent():
     )
     content_id = cursor.fetchone()[0]
     conn.commit()
+
     # INSERT INTO PINECONE content-store
+    documents = PyPDFLoader(link).load()
+    for doc in documents:
+        doc.metadata["cls"] = cls
+        doc.metadata["course_id"] = course_id
+        doc.metadata["subject_id"] = subject_id
+        doc.metadata["topic_id"] = topic_id
+        doc.metadata["content_id"] = content_id
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
+    documents = text_splitter.split_documents(documents)
+    pinecone4.add_documents(documents)
 
-    return "Not Implemented", 501
-    # return jsonify({"content_id": content_id}), 200
-
+    return flask.jsonify({"content_id": content_id}), 200
 
 
 if __name__ == "__main__":
