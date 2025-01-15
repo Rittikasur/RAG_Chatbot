@@ -1,0 +1,3 @@
+flask
+langchain_huggingface
+langchain_pinecone
