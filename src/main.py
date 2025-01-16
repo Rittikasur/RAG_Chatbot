@@ -22,7 +22,11 @@ cursor = conn.cursor()
 cursor.execute("SET search_path = lmstest")
 
 
+import jwt
+SECRET_KEY = "whyisitasitis"
+
 import flask
+import requests
 app = flask.Flask(__name__)
 
 @app.route("/", methods=["GET"])
@@ -92,7 +96,8 @@ def routeContent():
     if query is None or topic_id is None:
         return "Bad Request", 400
 
-    filter = { "topic_id": { "$eq": topic_id } }
+    # filter = { "topic_id": { "$eq": topic_id } }
+    filter = {}
     results = pinecone4.similarity_search_with_score(query, k=5, filter=filter)
 
     return flask.jsonify([
@@ -200,11 +205,75 @@ def createContent():
         doc.metadata["subject_id"] = subject_id
         doc.metadata["topic_id"] = topic_id
         doc.metadata["content_id"] = content_id
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=500)
     documents = text_splitter.split_documents(documents)
     pinecone4.add_documents(documents)
 
     return flask.jsonify({"content_id": content_id}), 200
+
+
+def authenticateToken():
+    auth_header = flask.request.headers.get("Authorization")
+    if not auth_header:
+        return "Authorization Header missing", 401
+    try:
+        token = auth_header.split(" ")[1]
+        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+    except (IndexError, jwt.ExpiredSignatureError, jwt.InvalidTokenError) as e:
+        return f"Invalid token: {str(e)}", 401
+
+    return decoded_token.get("id")
+
+@app.route("/query", methods=["POST"])
+def query():
+    user_id = authenticateToken()
+
+    cursor.execute("SELECT course_id FROM users WHERE user_id = %s", (user_id,))
+    course_id = cursor.fetchone()[0]
+    if not course_id:
+        return "Unauthorized", 401
+
+    data = flask.request.json
+    query = data.get("query")
+    context = data.get("context")
+    
+    results = requests.post("http://localhost:5000/router/topic", json={
+        "query": query,
+        "course_id": course_id
+    }).json()
+    topic_ids = [
+        topic_dict["metadata"]["topic_id"]
+        for topic_dict in results
+    ]
+    print(topic_ids)
+
+    results = requests.post("http://localhost:5000/router/content", json={
+        "query": query,
+        "topic_id": topic_ids[0]
+    }).json()
+    content_ids = [
+        content_dict["metadata"]["content_id"]
+        for content_dict in results
+    ]
+    print(content_ids)
+
+    rag_query = f"""
+        context: {context}
+        prompt: {query}
+    """
+    
+    response = requests.post("http://localhost:11434/api/generate", json={
+        "model": "llama3.2:1b",
+        "prompt": rag_query,
+        "stream": True
+    }, stream=True)
+    def generate_response():
+        for chunk in response.iter_content(chunk_size=None):  # chunk_size=None for streaming
+            yield chunk.decode("utf-8")
+
+    return flask.Response(generate_response(), content_type="application/json")
+    # return flask.jsonify(response.json()), response.status_code
+    # return "Not Implemented", 500
 
 
 if __name__ == "__main__":
