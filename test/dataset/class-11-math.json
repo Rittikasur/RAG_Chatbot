@@ -1,0 +1,128 @@
+[
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"SETS",
+        "topic_desc":"The concept of set serves as a fundamental part of the present day mathematics. Today this concept is being used in almost every branch of mathematics. Sets are used todefine the concepts of relations and functions.",
+        "content":"sets",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh101.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"RELATIONS AND FUNCTIONS",
+        "topic_desc":"we will learn how to link pairs of objects from two sets and then introduce relations between the two objects in the pair. Finally, we will learn about special relations which will qualify to be functions. The concept of function is very important in mathematics",
+        "content":"relations and functions",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh102.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"TRIGONOMETRIC FUNCTIONS",
+        "topic_desc":"Trigonometry studies the relationships between the angles and sides of triangles. It uses functions like sine, cosine, and tangent to solve problems involving right-angled and non-right-angled triangles.",
+        "content":"trigonometric functions",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh103.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"COMPLEX NUMBERS AND QUADRATIC EQUATIONS",
+        "topic_desc":"Complex numbers combine real and imaginary parts, written as a+bi. Quadratic equations are polynomial equations of the form ax^2+bx+c=0 whose solutions can involve complex numbers when there are no real roots.",
+        "content":"complex numbers and quadratic equations",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh104.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"LINEAR INEQUALITIES",
+        "topic_desc":"Linear inequalities involve expressions that use inequality signs (>, <, ≥, ≤) instead of equal signs. Solutions represent regions of the coordinate plane, showing values that satisfy the inequality.",
+        "content":"linear inequalities",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh105.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"PERMUTATIONS AND COMBINATIONS",
+        "topic_desc":"Permutation refers to the arrangement of objects in a specific order, while combination refers to the selection of objects without regard to order. Both are key in counting and probability.",
+        "content":"permutations and combinations",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh106.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"BINOMIAL THEOREM",
+        "topic_desc":"The Binomial Theorem provides a formula to expand expressions of the form (a+b)^n. It involves binomial coefficients and is crucial in algebra and combinatorics.",
+        "content":"binomial theorem",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh107.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"SEQUENCES AND SERIES",
+        "topic_desc":"Sequences are ordered lists of numbers, while series are the sum of the terms of a sequence. Arithmetic and geometric sequences are common examples, used to describe patterns and predict future values.",
+        "content":"sequence and series",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh108.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"STRAIGHT LINES",
+        "topic_desc":"A straight line in geometry is defined by its equation in the form y=mx+c where m is the slope and y is the intercept. Key concepts include slope, intercepts, distance between parallel lines, and the angle between two intersecting lines.",
+        "content":"straight lines",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh109.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"CONIC SECTIONS",
+        "topic_desc":"Conic sections are curves formed by the intersection of a plane and a cone. They include circles, ellipses, parabolas, and hyperbolas, each with unique properties and applications in geometry.",
+        "content":"conic sections",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh110.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"INTRODUCTION TO THREE DIMENSIONAL GEOMETRY",
+        "topic_desc":"3D geometry explores spatial relationships in three dimensions, including points, lines, planes, and shapes like spheres and cubes. Key concepts involve distance, direction, and angle between objects in 3D space.",
+        "content":"introduction to 3D geometry",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh111.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"LIMITS AND DERIVATIVES",
+        "topic_desc":"Limits describe the behavior of a function as it approaches a particular point, forming the foundation of calculus. Derivatives represent the rate of change of a function, measuring how a quantity changes with respect to another, and are used to find tangents, maxima, minima, and motion rates.",
+        "content":"limits and derivatives",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh112.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"STATISTICS",
+        "topic_desc":"Statistics is the study of collecting, analyzing, and interpreting data. It includes measures like mean, median, mode, and standard deviation, and is essential for making data-driven decisions.",
+        "content":"statistics",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh113.pdf"
+    },
+    {
+        "class":11,
+        "course":"science",
+        "subject":"Math",
+        "topic":"PROBABILITY",
+        "topic_desc":"Probability quantifies the likelihood of events occurring, ranging from 0 (impossible) to 1 (certain). It helps in predicting outcomes and analyzing random events in various fields.",
+        "content":"probability",
+        "link":"https://ncert.nic.in/textbook/pdf/kemh114.pdf"
+    }
+]

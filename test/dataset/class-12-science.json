@@ -1,0 +1,112 @@
+[
+    {
+        "class":6,
+        "course":"General Science",
+        "subject":"Science",
+        "topic":"The Wonderfull World of Science",
+        "topic_desc":" As human beings, we have always been curious about our surroundings. ",
+        "content":"The Wonderfull World of Science",
+        "link":"https://ncert.nic.in/textbook/pdf/fecu101.pdf"
+        },
+
+        {
+            "class":6,
+            "course":"General Science",
+            "subject":"Science",
+            "topic":"Diversity in the Living World",
+            "topic_desc":"   It is a pleasant morning after yesterday’s refreshing rain.Dr Raghu and Maniram chacha (uncle) have been invited to the school by the science teacher, Madam Sulekha, to facilitate an exciting nature walk.",
+            "content":"Diversity in the Living World",
+            "link":"https://ncert.nic.in/textbook/pdf/fecu102.pdf"
+            },
+            {
+                "class":6,
+                "course":"General Science",
+                "subject":"Science",
+                "topic":"Mindful Eating: A Path to a Healthy Body",
+                "topic_desc":"Mindful eating is the practice of paying full attention to the food you are eating, savoring each bite, and recognizing your body's hunger and fullness cues. By eating slowly and without distractions, you can develop a healthier relationship with food, reduce overeating, and improve digestion, leading to a more balanced and healthy lifestyle.  ",
+                "content":"Mindful Eating: A Path to a Healthy Body",
+                "link":"https://ncert.nic.in/textbook/pdf/fecu103.pdf"
+                },
+                {
+                    "class":6,
+                    "course":"General Science",
+                    "subject":"Science",
+                    "topic":"Exploring Magnets",
+                    "topic_desc":" Magnets are objects that produce a magnetic field, attracting or repelling certain materials like iron. They play a key role in various technologies, from compasses to electric motors, and are fundamental in understanding physics and Earth's magnetic properties. ",
+                    "content":"Exploring Magnets",
+                    "link":"https://ncert.nic.in/textbook/pdf/fecu104.pdf"
+                    },
+                    {
+                        "class":6,
+                        "course":"General Science",
+                        "subject":"Science",
+                        "topic":"Measurement of Length and Motion",
+                        "topic_desc":"Measurement of length involves determining the distance between two points, typically using tools like rulers, calipers, or measuring tapes. Motion refers to the change in position of an object over time. By studying motion, we can understand speed, velocity, and acceleration. These concepts are essential in physics, engineering, and everyday life, helping us quantify and describe the movement of objects.  ",
+                        "content":"Measurement of Length and Motion",
+                        "link":"https://ncert.nic.in/textbook/pdf/fecu105.pdf"
+                        },
+                        {
+                            "class":6,
+                            "course":"General Science",
+                            "subject":"Science",
+                            "topic":"Materials Around Us",
+                            "topic_desc":" Materials around us refer to the substances and objects we encounter in daily life, such as metals, plastics, wood, and fabrics. These materials have different properties, like hardness, flexibility, and conductivity, which determine their uses in various applications. ",
+                            "content":"Materials Around Us",
+                            "link":"https://ncert.nic.in/textbook/pdf/fecu106.pdf"
+                            },
+                            {
+                                "class":6,
+                                "course":"General Science",
+                                "subject":"Science",
+                                "topic":"Temperature and its Measurement",
+                                "topic_desc":"Temperature is a measure of how hot or cold an object is. It is commonly measured using instruments like thermometers, which can be calibrated in units like Celsius, Fahrenheit, or Kelvin, helping us understand and control the thermal energy in various environments.  ",
+                                "content":"Temperature and its Measurement",
+                                "link":"https://ncert.nic.in/textbook/pdf/fecu107.pdf"
+                                },
+                                {
+                                    "class":6,
+                                    "course":"General Science",
+                                    "subject":"Science",
+                                    "topic":"A Journey through States of Water",
+                                    "topic_desc":" Water exists in three main states: solid (ice), liquid (water), and gas (steam). These states change based on temperature and pressure, demonstrating the unique properties of water and its role in various natural processes. ",
+                                    "content":"A Journey through States of Water",
+                                    "link":"https://ncert.nic.in/textbook/pdf/fecu108.pdf"
+                                    },
+                                    {
+                                        "class":6,
+                                        "course":"General Science",
+                                        "subject":"Science",
+                                        "topic":"Methods of Separation in Everyday Life",
+                                        "topic_desc":"Separation methods, like filtration, evaporation, and distillation, help us separate mixtures in daily life. These techniques are used to purify water, separate solids from liquids, or extract useful substances, making them essential in cooking, cleaning, and scientific processes.  ",
+                                        "content":"Methods of Separation in Everyday Life",
+                                        "link":"https://ncert.nic.in/textbook/pdf/fecu109.pdf"
+                                        },
+                                        {
+                                            "class":6,
+                                            "course":"General Science",
+                                            "subject":"Science",
+                                            "topic":"Living Creatures: Exploring their Characteristics",
+                                            "topic_desc":"Living creatures, including animals, plants, and microorganisms, share common traits like growth, reproduction, and response to stimuli. These characteristics help scientists understand life forms, their behaviors, and how they adapt to their environments.  ",
+                                            "content":"Living Creatures: Exploring their Characteristics",
+                                            "link":"https://ncert.nic.in/textbook/pdf/fecu110.pdf"
+                                            },
+                                            {
+                                                "class":6,
+                                                "course":"General Science",
+                                                "subject":"Science",
+                                                "topic":"Nature’s Treasures",
+                                                "topic_desc":"Nature's treasures refer to the valuable resources and wonders found in the natural world, such as plants, minerals, water, and wildlife. These treasures provide essential sustenance, beauty, and ecological balance, supporting life on Earth.  ",
+                                                "content":"Nature’s Treasures",
+                                                "link":"https://ncert.nic.in/textbook/pdf/fecu111.pdf"
+                                                },
+                                                {
+                                                    "class":6,
+                                                    "course":"General Science",
+                                                    "subject":"Science",
+                                                    "topic":"Beyond Earth",
+                                                    "topic_desc":"Beyond Earth refers to the vast universe outside our planet, including other planets, stars, galaxies, and cosmic phenomena. Exploring this unknown frontier helps us understand the origins of the universe and the possibility of life beyond Earth. ",
+                                                    "content":"Beyond Earth",
+                                                    "link":"https://ncert.nic.in/textbook/pdf/fecu112.pdf"
+                                                    }
+        
+]

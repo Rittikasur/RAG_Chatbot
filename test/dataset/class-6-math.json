@@ -1,0 +1,99 @@
+[
+    {
+        "class":6,
+        "course":"General Science",
+        "subject":"Math",
+        "topic":"PATTERNS IN MATHEMATICS",
+        "topic_desc":"Mathematics is, in large part, the search for patterns, and forthe explanations as thosepatterns exist.Such patterns indeed exist all around us—in nature, inour homes and schools, and in the motion of the sun, moon,and stars. They occur in everything that we do and see, fromshopping and cooking, to throwing a ball and playing games, to understanding weather patterns and using technology.The search for patterns and their explanations can be a funand creative endeavour. It is for this reason that mathematiciansthink of mathematics both as an art and as a science. This year, wehope that you will get a chance to see the creativity and artistryinvolved in discovering and understanding mathematicalpatterns",
+        "content":"PATTERNS IN MATHEMATICS",
+        "link":"https://ncert.nic.in/textbook/pdf/fegp101.pdf"
+        },
+        {
+            "class":6,
+            "course":"General Science",
+            "subject":"Math",
+            "topic":"Lines and Anges",
+            "topic_desc":"In this chapter, we will explore some of the most basic ideas of geometry including points, lines, rays, line segments and angles. These ideas form the building blocks of ‘plane geometry’, and wil help us in understanding more advanced topics in geometry such as the construction and analysis of different shapes.",
+            "content":"Lines and Anges",
+            "link":"https://ncert.nic.in/textbook/pdf/fegp102.pdf"
+        },
+
+            {
+                "class":6,
+                "course":"General Science",
+                "subject":"Math",
+                "topic":"NUMBER PLAY",
+                "topic_desc":"Numbers are used in different contexts and in many different ways to organise our lives. We have used numbers to count, and have applied the basic operations of addition, subtraction, multiplication and division on them, to solve problems related to our daily lives. In this chapter, we will continue this journey, by playing with numbers, seeing numbers around us, noticing patterns, and learning to use num ers and operations in new ways.",
+                "content":"NUMBER PLAY",
+                "link":"https://ncert.nic.in/textbook/pdf/fegp103.pdf"
+            },
+
+            {
+                "class":6,
+                "course":"General Science",
+                "subject":"Math",
+                "topic":"Data Hanling and Presentation",
+                "topic_desc":"If you ask your classmates about their favourite colours, you will get a list of colours. This list is an example of data. Similarly, if you measure the weight of each student in your class, you would get a collection of measures of weight—again data",
+                "content":"Data Hanling and Presentation",
+                "link":"https://ncert.nic.in/textbook/pdf/fegp104.pdf"
+        },
+
+        {
+            "class":6,
+            "course":"General Science",
+            "subject":"Math",
+            "topic":"PRIME TIME",
+            "topic_desc":"Children sit in a circle and play a game of numbers. One of the children starts by saying ‘1’. The second player says ‘2’, and so on. But when it is the turn of 3, 6, 9, … (multiples of 3), the player should say ‘idli’ instead of the number. When it is the turn of 5, 10, … (multiples of 5), the player should say ‘vada’ instead of the number. When a number is both a multiple of 3 and a multiple of 5, the player should say ‘idli-vada’! If a player makes any mistake, they are out.",
+            "content":"PRIME TIME",
+            "link":"https://ncert.nic.in/textbook/pdf/fegp105.pdf"
+    },
+    {
+        "class":6,
+        "course":"General Science",
+        "subject":"Math",
+        "topic":"PERIMETER AND AREA",
+        "topic_desc":"Do you remember what the perimeter of a closed plane figure is? Let us refresh our understanding! The perimeter of any closed plane figure is the distance covered along its boundary when you go around it once. For a polygon, i.e., a closed plane figure made up of line segments, the perimeter is simply the sum of the lengths of its all sides, i.e., the total distance along its outer boundary",
+        "content":"PERIMETER AND AREA",
+        "link":"https://ncert.nic.in/textbook/pdf/fegp106.pdf"
+},
+{
+    "class":6,
+    "course":"General Science",
+    "subject":"Math",
+    "topic":"Fractions",
+    "topic_desc":"Recall that when some whole number of things are shared equally among some number of people, fractions tell us how much each share is. ",
+    "content":"Fractions",
+    "link":"https://ncert.nic.in/textbook/pdf/fegp107.pdf"
+},
+{
+    "class":6,
+    "course":"General Science",
+    "subject":"Math",
+    "topic":"Playing with Construtions",
+    "topic_desc":"Now, arm yourself with a ruler and a compass. Let us explore if we can draw these figures with these tools and get familiar with a compass. Observe the way a compass is made. What can one draw with the compass? Explore! Do you know what curves are? They are any shapes that can be drawn on paper with a pencil, and include straight lines, circles and other figures as shown below",
+    "content":"Playing with Construtions",
+    "link":"https://ncert.nic.in/textbook/pdf/fegp108.pdf"
+},
+{
+    "class":6,
+    "course":"General Science",
+    "subject":"Math",
+    "topic":"SYMMETRY",
+    "topic_desc":"There is something beautiful about the pictures above. The flower looks the same from many different angles. What about the butterfly? No doubt, the colours are very attractive. But what else about the butterfly appeals to you? In these pictures, it appears that some parts of the figure are repeated and these repetitions seem to occur in a definite pattern. Can you see what repeats in the beautiful rangoli figure",
+      "content":"SYMMETRY",
+    "link":"https://ncert.nic.in/textbook/pdf/fegp109.pdf"
+
+},
+
+{
+    "class":6,
+    "course":"General Science",
+    "subject":"Math",
+    "topic":"THE OTHER SIDE OF ZERO ",
+    "topic_desc":"More and ore numbers! Recall that the very first numbers we learned about in the study of mathematics were the counting numbers 1, 2, 3, 4, … Then we learned that there are even more numbers! For example, there is the number 0 (zero), representing nothing, which comes before 1. The number 0 has a very important history in India and now in the world. For example, around the world we learn to write numbers in the Indian number system using the digits 0 to 9, allowing us to write numbers however large or however small using just these 10 digits. We then learned about more numbers that exist between the numbers 0, 1, 2, 3, 4, … , such as 1 2 , 3 2 , and 13 6 . These are called fractions. But are th",
+    "content":"THE OTHER SIDE OF ZERO ",
+    "link":"https://ncert.nic.in/textbook/pdf/fegp110.pdf"
+}
+                
+            
+]

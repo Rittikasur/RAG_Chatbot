@@ -1,0 +1,111 @@
+[
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "The Wonderful World of Science",
+        "topic_desc":"As human beings, we have always been curious about our surroundings. We start exploring our surroundings and asking questions right from our childhood. Did you enjoy discovering and exploring the world around you in the Preparatory Stage of school? As you enter the Middle Stage, we will continue this fascinating journey, trying to explore and understand the beautiful world we live in. And for that, we have a new subject, Science. Welcome to the wonderful world of Science",
+        "content":"The Wonderful World of Science",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu101.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Diversity in the Living World",
+        "topic_desc":"We are surrounded by a large variety of plants and animals. Such variety of plants and animals is a part of biodiversity. Plants and animals can be grouped on the basis of similarities and differences among them",
+        "content":"Diversity in the Living World",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu102.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Mindful Eating A part to a Heathy body",
+        "topic_desc":"People across India eat diverse types of food, containing various food components.  Choice of food may vary according to the cultivation of food crops in a region, taste preferences, culture and traditions, and so on.",
+        "content":"Mindful Eating A part to a Heathy body",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu103.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Measurement of Length and Motion",
+        "topic_desc":"A magnet has two poles—the North pole and the South pole. The poles of a magnet always exist in pairs. A single North pole or a single South pole cannot exist. Magnetic materials are the materials that are attracted towards a magnet.  Non-magnetic materials are the materials that are not attracted towards a magnet.  A freely suspended magnet rests along the north-south direction.",
+        "content":"Measurement of Length and Motion",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu104.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Exploring Magnets",
+        "topic_desc":"The International System of Units (SI units) has been adopted by countries as standard units of measurement. The SI unit of length is metre. Its symbol is m. 1 km = 1000 m, 1 m = 100 cm, 1 cm = 10 mm. When distance is stated with respect to a fixed object or point, then this point is called a reference point. An object is said to be in motion if its position changes with respect to a reference point with time. When an object moves along a straight line, its motion is called linear motion. When an object moves along a circular path, its motion is called circular motion.  When any object moves to and fro about any fixed position, its motion is called oscillatory motion.",
+        "content":"Exploring Magnets",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu105.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Materials Around US",
+        "topic_desc":"Objects are made from a large variety of materials. An object can be made up of a single material or a combination of different materials. We can use different materials to make objects with similar functions. The method of arranging objects into groups is called classification. Materials possess different properties which determine their use. Materials are grouped or classified based on their similarities or differences in their properties",
+        "content":"Materials Around US",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu106.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Temperture and its Measurement",
+        "topic_desc":"The temperature of a body tells us how hot or cold it is. The three most-used scales of temperature are: (a) the Celsius scale, (b) the Fahrenheit scale, and (c) the Kelvin scale. The units of temperature in these scales are (a) degree Celsius, denoted by °C, (b) degree Fahrenheit, denoted by °F, and (c) kelvin, denoted by K.  The SI unit for temperature is kelvin. A clinical thermometer is used for measuring body temperature. Normal temperature of a healthy human adult is taken to be 37.0 °C or 98.6 °F. Laboratory thermometers typically have a temperature range from –10 °C to 110 °C",
+        "content":"Temperture and its Measurement",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu107.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "A Journey through states of mater",
+        "topic_desc":"The process of conversion of water into its vapour state is called evaporation. The process of conversion of water vapour into its liquid state is called condensation.  Water is found in different states—solid, liquid and gas. Water changes its state on heating or cooling. Conditions which make the evaporation faster or slower are exposed area, humidity, air movement, etc. Evaporation causes cooling effect.",
+        "content":"A Journey through states of mater",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu108.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Methods of Sparation in Everyday Life",
+        "topic_desc":"Handpicking is used for separating solid materials on the basis of differences in size, colour and shape from a mixture. The process in which the stalks are beaten to separate grains from them is called threshing. The method of separating lighter husk from heavier grains by wind or blowing air is called winnowing. The process of separating solids from a mixture based on variations in particle size using a sieve is called sieving.",
+        "content":"Methods of Sparation in Everyday Life",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu109.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Living Creatures Exploring their Charaetristics",
+        "topic_desc":"The objects around us can be categorised into two types living and non-living.  The essential features of living beings are that they move, eat, grow, breathe, excrete, respond to stimuli, reproduce and die. Absence of any of these features indicates that they are not living beings. Each living being goes through several stages during its life.  Germination of seeds depends upon the availability of water, air and suitable light and/or dark conditions. During germination of seeds, roots generally grow downwards, while shoots grow upwards",
+        "content":"Living Creatures Exploring their Charaetristics",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu110.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Natures Treasures",
+        "topic_desc":"Resources required for our survival are provided by nature. Resources provided by nature are called natural resources.  Some important natural resources are air, water, energy from the Sun, forests, soil, rocks, minerals and fossil fuels.  Resources created by human beings to meet their needs are called human-made resources.  Natural resources can be classified as renewable resources and non-renewable resources. ",
+        "content":"Natures Treasures",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu112.pdf"
+    },
+    {
+        "class": 6,
+        "course": "General Science",
+        "subject":"Science",
+        "topic": "Beyond Earth",
+        "topic_desc":"The eight planets, in order of their increasing distance from the Sun, are Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune. The Earth revolves around the Sun in nearly one year.  Objects that move around planets are commonly called satellites. The Moon is Earth’s natural satellite.  The Moon revolves around the Earth in nearly 27 days.  The Sun, eight planets, their moons, and many smaller objects including asteroids and comets, together form the Solar System. Our Solar System is part of the Milky Way Galaxy.",
+        "content":"Beyond Earth",
+        "link": "https://www.ncert.nic.in/textbook/pdf/fecu112.pdf"
+    }
+   
+]

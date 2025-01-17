@@ -29,6 +29,9 @@ import flask
 import requests
 app = flask.Flask(__name__)
 
+from controllers.auth import authenticateToken
+from controllers.router import getContext
+
 @app.route("/", methods=["GET"])
 def home():
     return "OK", 200
@@ -72,49 +75,49 @@ def deleteChat():
     return "Not Implemented", 501
 
 
-@app.route("/router/topic", methods=["POST"])
-def routeTopic():
-    data = flask.request.json
-    query = data.get("query")
-    course_id = data.get("course_id")
-    if query is None or course_id is None:
-        return "Bad Request", 400
+# @app.route("/router/topic", methods=["POST"])
+# def routeTopic():
+#     data = flask.request.json
+#     query = data.get("query")
+#     course_id = data.get("course_id")
+#     if query is None or course_id is None:
+#         return "Bad Request", 400
 
-    filter = { "course_id": { "$eq": course_id } }
-    results = pinecone3.similarity_search_with_score(query, k=3, filter=filter)
+#     filter = { "course_id": { "$eq": course_id } }
+#     results = pinecone3.similarity_search_with_score(query, k=3, filter=filter)
 
-    return flask.jsonify([
-        { "metadata": doc.metadata, "topic": doc.page_content, "score": score } 
-        for doc, score in results
-    ]), 200
+#     return flask.jsonify([
+#         { "metadata": doc.metadata, "topic": doc.page_content, "score": score } 
+#         for doc, score in results
+#     ]), 200
 
-@app.route("/router/content", methods=["POST"])
-def routeContent():
-    data = flask.request.json
-    query = data.get("query")
-    topic_id = data.get("topic_id")
-    if query is None or topic_id is None:
-        return "Bad Request", 400
+# @app.route("/router/content", methods=["POST"])
+# def routeContent():
+#     data = flask.request.json
+#     query = data.get("query")
+#     topic_id = data.get("topic_id")
+#     if query is None or topic_id is None:
+#         return "Bad Request", 400
 
-    # filter = { "topic_id": { "$eq": topic_id } }
-    filter = {}
-    results = pinecone4.similarity_search_with_score(query, k=5, filter=filter)
+#     # filter = { "topic_id": { "$eq": topic_id } }
+#     filter = {}
+#     results = pinecone4.similarity_search_with_score(query, k=5, filter=filter)
 
-    return flask.jsonify([
-        { "metadata": doc.metadata, "content": doc.page_content, "score": score }
-        for doc, score in results
-    ]), 200
+#     return flask.jsonify([
+#         { "metadata": doc.metadata, "content": doc.page_content, "score": score }
+#         for doc, score in results
+#     ]), 200
 
 @app.route("/content", methods=["POST"])
 def createContent():
     data = flask.request.json
-    cls = data.get("cls")
+    cls = data.get("class")
     course = data.get("course")
-    course_id = data.get("course_id")
+    # course_id = data.get("course_id")
     subject = data.get("subject")
-    subject_id = data.get("subject_id")
+    # subject_id = data.get("subject_id")
     topic = data.get("topic")
-    topic_id = data.get("topic_id")
+    # topic_id = data.get("topic_id")
     topic_desc = data.get("topic_desc")
     content = data.get("content")
     link = data.get("link")
@@ -173,7 +176,6 @@ def createContent():
                 (subject_id, topic, topic_desc)
             )
             topic_id, topic, topic_desc = cursor.fetchone()
-            conn.commit()
 
             # INSERT INTO PINECONE topic-store2
             documents = [Document(
@@ -195,7 +197,6 @@ def createContent():
         (topic_id, content, link)
     )
     content_id = cursor.fetchone()[0]
-    conn.commit()
 
     # INSERT INTO PINECONE content-store
     documents = PyPDFLoader(link).load()
@@ -209,24 +210,15 @@ def createContent():
     documents = text_splitter.split_documents(documents)
     pinecone4.add_documents(documents)
 
+    conn.commit()
     return flask.jsonify({"content_id": content_id}), 200
 
-
-def authenticateToken():
-    auth_header = flask.request.headers.get("Authorization")
-    if not auth_header:
-        return "Authorization Header missing", 401
-    try:
-        token = auth_header.split(" ")[1]
-        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-    except (IndexError, jwt.ExpiredSignatureError, jwt.InvalidTokenError) as e:
-        return f"Invalid token: {str(e)}", 401
-
-    return decoded_token.get("id")
 
 @app.route("/query", methods=["POST"])
 def query():
     user_id = authenticateToken()
+    if not user_id:
+        return "Unauthorized", 401
 
     cursor.execute("SELECT course_id FROM users WHERE user_id = %s", (user_id,))
     course_id = cursor.fetchone()[0]
@@ -237,25 +229,7 @@ def query():
     query = data.get("query")
     context = data.get("context")
     
-    results = requests.post("http://localhost:5000/router/topic", json={
-        "query": query,
-        "course_id": course_id
-    }).json()
-    topic_ids = [
-        topic_dict["metadata"]["topic_id"]
-        for topic_dict in results
-    ]
-    print(topic_ids)
-
-    results = requests.post("http://localhost:5000/router/content", json={
-        "query": query,
-        "topic_id": topic_ids[0]
-    }).json()
-    content_ids = [
-        content_dict["metadata"]["content_id"]
-        for content_dict in results
-    ]
-    print(content_ids)
+    context = getContext(query, course_id)
 
     rag_query = f"""
         context: {context}
@@ -267,13 +241,14 @@ def query():
         "prompt": rag_query,
         "stream": True
     }, stream=True)
+
     def generate_response():
         for chunk in response.iter_content(chunk_size=None):  # chunk_size=None for streaming
             yield chunk.decode("utf-8")
 
+    # cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES ($1, $2, $3, $4) RETURNING chat_id", )
+
     return flask.Response(generate_response(), content_type="application/json")
-    # return flask.jsonify(response.json()), response.status_code
-    # return "Not Implemented", 500
 
 
 if __name__ == "__main__":
