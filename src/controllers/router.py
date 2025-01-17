@@ -21,7 +21,7 @@ def getContext(query, course_id):
     return [
         doc.page_content
         for doc, score in results
-    ]
+    ], topic_ids
 
 # def routeTopic(query, course_id):
 #     filter = { "course_id": { "$eq": course_id } }

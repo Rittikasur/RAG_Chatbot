@@ -1,3 +1,4 @@
+import json
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone.vectorstores import PineconeVectorStore
 from langchain_community.document_loaders import PyPDFLoader
@@ -227,9 +228,11 @@ def query():
 
     data = flask.request.json
     query = data.get("query")
-    context = data.get("context")
+    # context = data.get("context")
+    stream = data.get("stream")
+    if not stream: stream = False
     
-    context = getContext(query, course_id)
+    context, topic_ids = getContext(query, course_id)
 
     rag_query = f"""
         context: {context}
@@ -239,16 +242,26 @@ def query():
     response = requests.post("http://localhost:11434/api/generate", json={
         "model": "llama3.2:1b",
         "prompt": rag_query,
-        "stream": True
-    }, stream=True)
+        "stream": stream
+    }, stream=stream)
 
-    def generate_response():
-        for chunk in response.iter_content(chunk_size=None):  # chunk_size=None for streaming
-            yield chunk.decode("utf-8")
+    if stream:
+        response = ""
+        def generate_response():
+            yield json.dumps({"context": context, "query": query, "topic_ids": topic_ids}) + "\n"
+            for chunk in response.iter_content(chunk_size=None):  # chunk_size=None for streaming
+                chunk = chunk.decode("utf-8")
+                response += json.loads(chunk).response
+                yield chunk
 
+        # SOMEHOW Put the things into the Database
+        return flask.Response(generate_response(), content_type="application/json")
+    else:
+        cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES (%s, %s, %s) RETURNING chat_id", (user_id, query, response.json()))
+        return flask.jsonify(response.json()), 200
+    
     # cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES ($1, $2, $3, $4) RETURNING chat_id", )
 
-    return flask.Response(generate_response(), content_type="application/json")
 
 
 if __name__ == "__main__":
