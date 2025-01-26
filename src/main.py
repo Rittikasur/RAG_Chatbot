@@ -257,7 +257,7 @@ def query():
         # SOMEHOW Put the things into the Database
         return flask.Response(generate_response(), content_type="application/json")
     else:
-        cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES (%s, %s, %s) RETURNING chat_id", (user_id, query, response.json()))
+        #cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES (%s, %s, %s) RETURNING chat_id", (user_id, query, response.json()))
         return flask.jsonify(response.json()), 200
     
     # cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES ($1, $2, $3, $4) RETURNING chat_id", )
