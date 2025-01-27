@@ -4,6 +4,7 @@ from langchain_pinecone.vectorstores import PineconeVectorStore
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.docstore.document import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from flask_cors import CORS
 
 model = HuggingFaceEmbeddings(model_name="sentence-transformers/multi-qa-mpnet-base-cos-v1")
 
@@ -29,6 +30,8 @@ SECRET_KEY = "whyisitasitis"
 import flask
 import requests
 app = flask.Flask(__name__)
+CORS(app)
+
 
 from controllers.auth import authenticateToken
 from controllers.router import getContext
