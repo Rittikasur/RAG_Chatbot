@@ -115,107 +115,54 @@ def deleteChat():
 
 @app.route("/content", methods=["POST"])
 def createContent():
+    cursor = conn.cursor()
     data = flask.request.json
     cls = data.get("class")
-    course = data.get("course")
-    # course_id = data.get("course_id")
-    subject = data.get("subject")
-    # subject_id = data.get("subject_id")
-    topic = data.get("topic")
-    # topic_id = data.get("topic_id")
-    topic_desc = data.get("topic_desc")
-    content = data.get("content")
+    course_id = data.get("course")
+    subject_id = data.get("subject")
+    topic_id = data.get("topic")
+    content_id = data.get("content")
     link = data.get("link")
 
-    # cursor.execute("SELECT * FROM class WHERE class_id = %s", (cls,))
-    # result1 = cursor.fetchone()
-    # if not result1:
-    #     cursor.execute(
-    #         "INSERT INTO class (class_id, name, code, search_key) VALUES (%s, %s, %s, %s)",
-    #         (cls, f"Class {cls}", f"C{cls}", f"class-{cls}")
-    #     )
-    #     conn.commit()
+    try:
+        assert isinstance(course_id,int)
+        assert isinstance(subject_id, int)
+        assert isinstance(topic_id, int)
+        assert isinstance(content_id, int)
+        assert isinstance(link, str)
+    except:
+        return flask.jsonify({"error":"Please give all ids as integer"}),400
 
-    if isinstance(course, int):
-        course_id = course
-    else:
-        cursor.execute("SELECT * FROM course WHERE name = %s AND class_id = %s", (course, cls))
-        result2 = cursor.fetchone()
-        if not result2:
-            cursor.execute(
-                "INSERT INTO course (class_id, user_id, name) VALUES (%s, %s, %s) RETURNING course_id",
-                (cls, 1, course)
-            )
-            course_id = cursor.fetchone()[0]
-            conn.commit()
-        else:
-            course_id = result2[0]
+    cursor.execute("SELECT name FROM subject WHERE subject_id = %s", (subject_id,))
+    subject = cursor.fetchone()[0]
+    cursor.execute("SELECT name, description FROM topic WHERE topic_id = %s", (topic_id,))
+    topic, topic_desc = cursor.fetchone()
 
-    if isinstance(subject, int):
-        subject_id = subject
-        cursor.execute("SELECT name FROM subject WHERE subject_id = %s", (subject_id,))
-        subject = cursor.fetchone()[0]
-    else:
-        cursor.execute("SELECT * FROM subject WHERE name = %s AND course_id = %s", (subject, course_id))
-        result3 = cursor.fetchone()
-        if not result3:
-            cursor.execute(
-                "INSERT INTO subject (course_id, name) VALUES (%s, %s) RETURNING subject_id",
-                (course_id, subject)
-            )
-            subject_id = cursor.fetchone()[0]
-            conn.commit()
-        else:
-            subject_id = result3[0]
+    try:
+        # INSERT INTO PINECONE topic-store2
+        documents = [Document(
+            id = topic_id,
+            page_content = f"{subject} {topic} {topic_desc}",
+            metadata = { "cls": cls, "course_id": course_id, "subject_id": subject_id, "topic_id": topic_id }
+        )]
+        pinecone3.add_documents(documents)
 
-    if isinstance(topic, int):
-        topic_id = topic
-        cursor.execute("SELECT name, description FROM topic WHERE topic_id = %s", (topic_id,))
-        topic, topic_desc = cursor.fetchone()
-    else:
-        cursor.execute("SELECT topic_id, name, description FROM topic WHERE name = %s AND subject_id = %s", (topic, subject_id))
-        result4 = cursor.fetchone()
-        if not result4:
-            cursor.execute(
-                "INSERT INTO topic (subject_id, name, description) VALUES (%s, %s, %s) RETURNING topic_id, name, description",
-                (subject_id, topic, topic_desc)
-            )
-            topic_id, topic, topic_desc = cursor.fetchone()
 
-            # INSERT INTO PINECONE topic-store2
-            documents = [Document(
-                id = topic_id,
-                page_content = f"{subject} {topic} {topic_desc}",
-                metadata = { "cls": cls, "course_id": course_id, "subject_id": subject_id, "topic_id": topic_id }
-            )]
-            pinecone3.add_documents(documents)
-        else:
-            topic_id, topic, topic_desc = result4
+        # INSERT INTO PINECONE content-store
+        documents = PyPDFLoader(link).load()
+        for doc in documents:
+            doc.metadata["cls"] = cls
+            doc.metadata["course_id"] = course_id
+            doc.metadata["subject_id"] = subject_id
+            doc.metadata["topic_id"] = topic_id
+            doc.metadata["content_id"] = content_id
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=500)
+        documents = text_splitter.split_documents(documents)
+        pinecone4.add_documents(documents)
 
-    cursor.execute("SELECT * FROM content WHERE topic_id = %s AND link = %s", (topic_id, link))
-    result5 = cursor.fetchone()
-    if result5:
-        return "Conflict", 409
+    except Exception as e:
+        return flask.jsonify({"error": f"Error inserting in pinecone {str(e)}"}), 500
 
-    cursor.execute(
-        "INSERT INTO content (topic_id, name, link) VALUES (%s, %s, %s) RETURNING content_id",
-        (topic_id, content, link)
-    )
-    content_id = cursor.fetchone()[0]
-
-    # INSERT INTO PINECONE content-store
-    documents = PyPDFLoader(link).load()
-    for doc in documents:
-        doc.metadata["cls"] = cls
-        doc.metadata["course_id"] = course_id
-        doc.metadata["subject_id"] = subject_id
-        doc.metadata["topic_id"] = topic_id
-        doc.metadata["content_id"] = content_id
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=500)
-    documents = text_splitter.split_documents(documents)
-    pinecone4.add_documents(documents)
-
-    conn.commit()
     return flask.jsonify({"content_id": content_id}), 200
 
 
