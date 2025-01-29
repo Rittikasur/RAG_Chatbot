@@ -18,10 +18,11 @@ conn = psycopg2.connect(
     user="root",
     password="lms@123",
     host="65.1.143.128",
-    port=5432
+    port=5432,
+    options = "-c search_path=lmstest"
 )
-cursor = conn.cursor()
-cursor.execute("SET search_path = lmstest")
+
+#cursor.execute("SET search_path = lmstest")
 
 
 import jwt
@@ -220,6 +221,7 @@ def createContent():
 
 @app.route("/query", methods=["POST"])
 def query():
+    cursor = conn.cursor()
     user_id = authenticateToken()
     if not user_id:
         return "Unauthorized", 401
