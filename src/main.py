@@ -41,20 +41,6 @@ from controllers.router import getContext
 def home():
     return "OK", 200
 
-
-@app.route("/auth/register", methods=["POST"])
-def registerUser():
-    return "Not Implemented", 501
-
-@app.route("/auth/login", methods=["POST"])
-def loginUser():
-    return "Not Implemented", 501
-
-@app.route("/auth", methods=["GET"])
-def getUserProfile():
-    return "Not Implemented", 501
-
-
 @app.route("/chats", methods=["GET"])
 def getChats():
     return "Not Implemented", 501
@@ -79,39 +65,6 @@ def updateChat():
 def deleteChat():
     return "Not Implemented", 501
 
-
-# @app.route("/router/topic", methods=["POST"])
-# def routeTopic():
-#     data = flask.request.json
-#     query = data.get("query")
-#     course_id = data.get("course_id")
-#     if query is None or course_id is None:
-#         return "Bad Request", 400
-
-#     filter = { "course_id": { "$eq": course_id } }
-#     results = pinecone3.similarity_search_with_score(query, k=3, filter=filter)
-
-#     return flask.jsonify([
-#         { "metadata": doc.metadata, "topic": doc.page_content, "score": score } 
-#         for doc, score in results
-#     ]), 200
-
-# @app.route("/router/content", methods=["POST"])
-# def routeContent():
-#     data = flask.request.json
-#     query = data.get("query")
-#     topic_id = data.get("topic_id")
-#     if query is None or topic_id is None:
-#         return "Bad Request", 400
-
-#     # filter = { "topic_id": { "$eq": topic_id } }
-#     filter = {}
-#     results = pinecone4.similarity_search_with_score(query, k=5, filter=filter)
-
-#     return flask.jsonify([
-#         { "metadata": doc.metadata, "content": doc.page_content, "score": score }
-#         for doc, score in results
-#     ]), 200
 
 @app.route("/content", methods=["POST"])
 def createContent():
