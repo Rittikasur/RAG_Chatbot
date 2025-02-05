@@ -185,11 +185,12 @@ def route():
 
 @app.route("/query", methods=["POST"])
 def query():
-    cursor = conn.cursor()
+
     user_id = 8 #authenticateToken()
     if not user_id:
         return "Unauthorized", 401
     try:
+        cursor = conn.cursor()
         cursor.execute("SELECT course_id FROM users WHERE user_id = %s", (user_id,))
         course_id = cursor.fetchone()[0]
         if not course_id:
@@ -197,15 +198,44 @@ def query():
 
         data = flask.request.json
         query = data.get("query")
+        session_id = data.get("session_id")
         context, topic_ids = getContext(query, course_id)
         ctx = ''.join(context)
         response = llmroute(query,ctx)
 
+        # Start a transaction
+        cursor.execute("BEGIN;")
+
+        if not session_id:
+            # Create a new session and get its ID
+            cursor.execute("INSERT INTO sessions (user_id) VALUES (%s) RETURNING session_id;", (user_id,))
+            session_id = cursor.fetchone()[0]
+
+        # Insert chat record
+        cursor.execute("""
+                    INSERT INTO chats (user_id, session_id, prompt, response) 
+                    VALUES (%s, %s, %s, %s) 
+                    RETURNING chat_id;
+                """, (user_id, session_id, query, response))
+
+        chat_id = cursor.fetchone()[0]
+
+        # Commit transaction
+        conn.commit()
+        cursor.close()
+
+        return flask.jsonify({
+            "session_id": session_id,
+            "chat_id": chat_id,
+            "response": response
+        }), 200
+
         #cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES (%s, %s, %s) RETURNING chat_id", (user_id, query, response.json()))
-        return flask.jsonify({"response":response}), 200
+        # return flask.jsonify({"response":response}), 200
         
         # cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES ($1, $2, $3, $4) RETURNING chat_id", )
     except Exception as e:
+        conn.rollback()
         return flask.jsonify({"error":str(e)}), 500
 
 
