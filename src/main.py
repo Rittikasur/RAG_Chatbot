@@ -151,7 +151,7 @@ def createContent():
 @app.route("/route", methods=["POST"])
 def route():
     cursor = conn.cursor()
-    user_id = 8  # authenticateToken()
+    user_id = authenticateToken()
     if not user_id:
         return "Unauthorized", 401
     try:
@@ -192,7 +192,7 @@ def route():
 @app.route("/query", methods=["POST"])
 def query():
 
-    user_id = 8 #authenticateToken()
+    user_id = authenticateToken()
     if not user_id:
         return "Unauthorized", 401
     try:
