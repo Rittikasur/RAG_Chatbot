@@ -9,7 +9,7 @@ import jwt
 import flask
 import requests
 from controllers.auth import authenticateToken
-from controllers.model_router import llmroute
+from controllers.model_router import llmroute,sessionname
 from controllers.router import getContext
 import psycopg2
 from langchain_ollama.llms import OllamaLLM
@@ -49,29 +49,49 @@ CORS(app)
 def home():
     return "OK", 200
 
-@app.route("/chats", methods=["GET"])
-def getChats():
-    return "Not Implemented", 501
+@app.route("/sessions/<int:user_id>", methods=["GET"])
+def get_sessions(user_id):
+    """Fetch all sessions for a user, ordered by created_at (newest first)."""
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT session_id, created_at, name
+            FROM sessions 
+            WHERE user_id = %s 
+            ORDER BY created_at DESC;
+        """, (user_id,))
+        sessions = cursor.fetchall()
+        cursor.close()
 
-@app.route("/chats/latest", methods=["GET"])
-def getLatestChat():
-    return "Not Implemented", 501
+        return flask.jsonify([
+            {"session_id": s[0], "created_at": s[1],"name":s[2]} for s in sessions
+        ]), 200
 
-@app.route("/chats/<chat_id>", methods=["GET"])
-def getChatByID(chat_id):
-    return "Not Implemented", 501
+    except Exception as e:
+        return flask.jsonify({"error": str(e)}), 500
 
-@app.route("/chats", methods=["POST"])
-def createChat():
-    return "Not Implemented", 501
 
-@app.route("/chats/<chat_id>", methods=["PUT"])
-def updateChat():
-    return "Not Implemented", 501
+@app.route("/chats/<int:session_id>", methods=["GET"])
+def get_chats(session_id):
+    """Fetch all chats for a session, ordered by created_at (oldest first)."""
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT chat_id, user_id, prompt, response, created_at 
+            FROM chats 
+            WHERE session_id = %s 
+            ORDER BY created_at ASC;
+        """, (session_id,))
+        chats = cursor.fetchall()
+        cursor.close()
 
-@app.route("/chats/<chat_id>", methods=["DELETE"])
-def deleteChat():
-    return "Not Implemented", 501
+        return flask.jsonify([
+            {"chat_id": c[0], "user_id": c[1], "prompt": c[2], "response": c[3], "created_at": c[4]}
+            for c in chats
+        ]), 200
+
+    except Exception as e:
+        return flask.jsonify({"error": str(e)}), 500
 
 
 @app.route("/content", methods=["POST"])
@@ -194,7 +214,10 @@ def query():
 
         if not session_id:
             # Create a new session and get its ID
-            cursor.execute("INSERT INTO sessions (user_id) VALUES (%s) RETURNING session_id;", (user_id,))
+            session_name = sessionname(query,ctx)
+            print(session_name)
+            print(type(session_name))
+            cursor.execute("INSERT INTO sessions (user_id,name) VALUES (%s,%s) RETURNING session_id;", (user_id,session_name,))
             session_id = cursor.fetchone()[0]
 
         # Insert chat record
@@ -215,11 +238,6 @@ def query():
             "chat_id": chat_id,
             "response": response
         }), 200
-
-        #cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES (%s, %s, %s) RETURNING chat_id", (user_id, query, response.json()))
-        # return flask.jsonify({"response":response}), 200
-        
-        # cursor.execute("INSERT INTO chats (user_id, prompt, response) VALUES ($1, $2, $3, $4) RETURNING chat_id", )
     except Exception as e:
         conn.rollback()
         return flask.jsonify({"error":str(e)}), 500
