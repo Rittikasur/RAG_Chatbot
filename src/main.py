@@ -49,20 +49,6 @@ CORS(app)
 def home():
     return "OK", 200
 
-
-@app.route("/auth/register", methods=["POST"])
-def registerUser():
-    return "Not Implemented", 501
-
-@app.route("/auth/login", methods=["POST"])
-def loginUser():
-    return "Not Implemented", 501
-
-@app.route("/auth", methods=["GET"])
-def getUserProfile():
-    return "Not Implemented", 501
-
-
 @app.route("/chats", methods=["GET"])
 def getChats():
     return "Not Implemented", 501
