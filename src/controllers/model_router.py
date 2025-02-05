@@ -50,6 +50,23 @@ answerchain = (
         | StrOutputParser()
 )
 
+sessionnamechain = (
+        PromptTemplate.from_template(
+            """
+    <context>
+    {context}
+    </context>
+    <question>
+    {question}
+    </question>
+    
+    From the context and question create a three word text which best describes the topic of the question and the context
+    Do not respond with more than three word.
+    """
+        )
+        | ollamamodel
+        | StrOutputParser()
+)
 
 def llmroute(question,context):
     classification_result = chain.invoke({"question": question})
@@ -57,4 +74,8 @@ def llmroute(question,context):
         response = general_chain.invoke({"question": question})
     else:
         response = answerchain.invoke({"context": context, "question": question})
+    return response
+
+def sessionname(question,context):
+    response = sessionnamechain.invoke({"context": context, "question": question})
     return response
