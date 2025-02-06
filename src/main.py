@@ -43,6 +43,23 @@ SECRET_KEY = "whyisitasitis"
 app = flask.Flask(__name__)
 CORS(app)
 
+def get_db_connection():
+    global conn
+    try:
+        # Check if the connection is closed
+        if conn.closed:
+            conn = psycopg2.connect(
+                dbname="postgres",
+                user="root",
+                password="lms@123",
+                host="65.1.143.128",
+                port=5432,
+                options="-c search_path=lmstest"
+            )
+    except Exception as e:
+        print(f"Error reconnecting to database: {e}")
+        return None
+    return conn
 
 
 @app.route("/", methods=["GET"])
@@ -53,6 +70,9 @@ def home():
 def get_sessions(user_id):
     """Fetch all sessions for a user, ordered by created_at (newest first)."""
     try:
+        conn = get_db_connection()
+        if not conn:
+            return flask.jsonify({"error": "Database connection error"}), 500
         cursor = conn.cursor()
         cursor.execute("""
             SELECT session_id, created_at, name
@@ -75,6 +95,9 @@ def get_sessions(user_id):
 def get_chats(session_id):
     """Fetch all chats for a session, ordered by created_at (oldest first)."""
     try:
+        conn = get_db_connection()
+        if not conn:
+            return flask.jsonify({"error": "Database connection error"}), 500
         cursor = conn.cursor()
         cursor.execute("""
             SELECT chat_id, user_id, prompt, response, created_at 
@@ -96,6 +119,9 @@ def get_chats(session_id):
 
 @app.route("/content", methods=["POST"])
 def createContent():
+    conn = get_db_connection()
+    if not conn:
+        return flask.jsonify({"error": "Database connection error"}), 500
     cursor = conn.cursor()
     data = flask.request.json
     cls = data.get("class")
@@ -150,6 +176,9 @@ def createContent():
 
 @app.route("/route", methods=["POST"])
 def route():
+    conn = get_db_connection()
+    if not conn:
+        return flask.jsonify({"error": "Database connection error"}), 500
     cursor = conn.cursor()
     user_id = authenticateToken()
     if not user_id:
@@ -196,6 +225,9 @@ def query():
     if not user_id:
         return "Unauthorized", 401
     try:
+        conn = get_db_connection()
+        if not conn:
+            return flask.jsonify({"error": "Database connection error"}), 500
         cursor = conn.cursor()
         cursor.execute("SELECT course_id FROM users WHERE user_id = %s", (user_id,))
         course_id = cursor.fetchone()[0]
