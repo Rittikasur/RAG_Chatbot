@@ -180,7 +180,7 @@ def route():
     if not conn:
         return flask.jsonify({"error": "Database connection error"}), 500
     cursor = conn.cursor()
-    user_id = 8  # authenticateToken()
+    user_id = authenticateToken()
     if not user_id:
         return "Unauthorized", 401
     try:
@@ -221,7 +221,7 @@ def route():
 @app.route("/query", methods=["POST"])
 def query():
 
-    user_id = 8 #authenticateToken()
+    user_id = authenticateToken()
     if not user_id:
         return "Unauthorized", 401
     try:
